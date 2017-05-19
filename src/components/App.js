@@ -1,30 +1,39 @@
 // This component handles the App template used on every page.
 import React, {PropTypes} from 'react';
-import Header from './common/Header';
+
 import {connect} from 'react-redux';
 
+import PersonalInformation from './pages/PersonalInformation';
+import Address from './pages/Address'
+
 class App extends React.Component {
-  render() {
-    return (
-      <div className="container-fluid">
-        <Header
-          loading={this.props.loading}
-        />
-        {this.props.children}
-      </div>
-    );
+  constructor(props){
+    super(props);
   }
+
+  render() {
+    debugger;
+    switch (this.props.pageNumber) {
+      case 1:
+        return (<div className="container-fluid"><PersonalInformation/></div>);
+      case 2:
+        return <Address></Address>;
+
+      default:
+
+    }
+      }
 }
 
-App.propTypes = {
-  children: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
-};
+
+
 
 function mapStateToProps(state, ownProps) {
   return {
-    loading: state.ajaxCallsInProgress > 0
+    pageNumber: state.pageNumber
   };
 }
+
+
 
 export default connect(mapStateToProps)(App);
